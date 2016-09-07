@@ -24,12 +24,20 @@ class Slideshow
     // The syntax for these is just like normal PHP functions
     // Remember, this is just a skeleton, we will fill in these functions later
 
-    function Slideshow() {
+
+    public function __construct() {
         $this->dbHost = 'localhost';
         $this->dbUser = 'root';
         $this->dbName = 'slideshow';
         $this->dbPass = 'root';
         $this->dbTable = 'slideshow';
+
+        try {
+            $db = new PDO('mysql:dbname='.$this->dbName.';host='.$this->dbHost.'', $this->dbUser, $this->dbPass);
+        } catch (PDOException $e) {
+            echo 'Connection failed: ' . $e->getMessage();
+        }
+
     }
 
     function displaySlideshow($q){
@@ -59,12 +67,12 @@ class Slideshow
 }
 
 $homepageSlideshow = new Slideshow;
-$homepageSlideshow->displaySlideshow("SELECT * FROM slideshow WHERE slideshowID = '2'");
+$homepageSlideshow->displaySlideshow("SELECT * FROM slideshow");
 
 
 
 
 $postTitle = 'Test Title';$postTitleAlt = 'Test Alt';$postImg = 'Image Goes Here.jpg';
-$homepageSlideshow->addSlideshowImage(array($postTitle, $postTitleAlt, $postImg));
+//$homepageSlideshow->addSlideshowImage(array($postTitle, $postTitleAlt, $postImg));
 
 ?>
