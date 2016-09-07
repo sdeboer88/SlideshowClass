@@ -45,24 +45,26 @@ class Slideshow
         }
     }
 
-    function addSlideshowImage($q,$params){
+    function addSlideshowImage($params){
         try {
             $db = new PDO('mysql:dbname='.$this->dbName.';host='.$this->dbHost.'', $this->dbUser, $this->dbPass);
         } catch (PDOException $e) {
             echo 'Connection failed: ' . $e->getMessage();
         }
 
-        $stmt = $db->prepare($q);
-        // Execute statement
+        $stmt = $db->prepare("INSERT INTO slideshow (slideshowTitle, slideshowAlt, slideshowImg) VALUES (?, ?, ?)");
         $stmt->execute($params);
-
     }
 
 }
 
 $homepageSlideshow = new Slideshow;
 $homepageSlideshow->displaySlideshow("SELECT * FROM slideshow WHERE slideshowID = '2'");
-$homepageSlideshow->addSlideshowImage("INSERT INTO table (field1, field2, field3) VALUES (?, ?, ?)", array($id, $name, $pass))
 
-sql($db, "INSERT INTO table (field1, field2, field3) VALUES (?, ?, ?)", array($id, $name, $pass));
+
+
+
+$postTitle = 'Test Title';$postTitleAlt = 'Test Alt';$postImg = 'Image Goes Here.jpg';
+$homepageSlideshow->addSlideshowImage(array($postTitle, $postTitleAlt, $postImg));
+
 ?>
